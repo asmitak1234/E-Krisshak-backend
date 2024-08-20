@@ -52,7 +52,7 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
 4. *Configure the Database*
 
-   - Create a MySQL database and user. Update the database settings in [ekrisshakbackend/settings.py](settings.py):
+   - Create a MySQL database and user. Update the database settings in [ekrisshakbackend/settings.py](ekrisshakbackend/settings.py):
 
      python
      DATABASES = {
