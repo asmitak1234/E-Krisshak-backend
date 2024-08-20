@@ -1,3 +1,5 @@
+# <!-- Made By - Asmita Kumari -->
+
 """
 Django settings for ekrisshakbackend project.
 
