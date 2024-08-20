@@ -1,3 +1,5 @@
+<!-- Made by- Asmita Kumari -->
+
 # E-Krisshak-backend
 <!-- explaining setup,functionalities, and deployment steps. -->
 <!-- ## for heading, # for main heading,following for links and lists ,[CONTRIBUTING.md](CONTRIBUTING.md) file for locating to file.-->
@@ -5,7 +7,7 @@
 
 ## Description
 
-Hello Everyone, I am ASMITA KUMARI ,a young learner and i am here with my project called "E-Krisshak" , A farmer availability management system that helps to find a farmer for your field with their proper and detailed Personal, Professional and Contact information that helps you to choose them according to your requirements. I am making this project with the intension of helping the land-owners that can't find farmer for their field and many farmers that are seeking for work ,especially in INDIA.
+Hello Everyone, I am ASMITA KUMARI , a young learner and i am here with backend part of my project called "E-Krisshak" , A farmer availability management system that helps to find a farmer for your field with their proper and detailed Personal, Professional and Contact information that helps you to choose them according to your requirements. I am making this project with the intension of helping the land-owners that can't find farmer for their field and many farmers that are seeking for work ,especially in INDIA.
 
 This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application using Django for the backend, React for the frontend, and MySQL as the database. This README provides instructions on setting up, using, and deploying the backend of this project.
 
@@ -120,9 +122,10 @@ For Security reasons you can add .env file to protect your sensitive data from s
 ## Functionalities
 
 - *User Authentication*: Users can register and log in to their profiles.
+- *Responsive Design*: The frontend is designed to be responsive and dynamic that works on various devices.
 - *Navigation*: Users can navigate to different web pages(Home , List , Manage) through Side Navigation Bar.
+- *Form Handling*: User input and form submissions are handled with proper validation mechanisms.
 - *CRUD Operations*: Perform create, read, update, and delete operations on the main resources.
-- *Responsive Design*: The frontend is designed to be responsive and works on various devices.
 - *API Integration*: The frontend communicates with the backend via a RESTful API.
 
 ## Deployment
