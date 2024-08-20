@@ -32,21 +32,21 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
 1. *Clone the Repository*
 
-   bash
+   bash:
    git clone https://github.com/asmitak1234/E-Krisshak-backend.git
    cd E-Krisshak-backend
    
 
 2. *Create and Activate a Virtual Environment*
 
-   bash
+   bash:
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    
 
 3. *Install Backend Dependencies*
 
-   bash
+   bash:
    pip install -r requirements.txt
    
 
@@ -54,7 +54,7 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
    - Create a MySQL database and user. Update the database settings in [ekrisshakbackend/settings.py](ekrisshakbackend/settings.py):
 
-     python
+     python:
      DATABASES = {
          'default': {
              'ENGINE': 'django.db.backends.mysql',
@@ -69,19 +69,19 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
 5. *Apply Migrations*
 
-   bash
+   bash:
    python manage.py migrate
    
 
 6. *Create a Superuser*
 
-   bash
+   bash:
    python manage.py createsuperuser
    
 
 7. *Run the Development Server*
 
-   bash
+   bash:
    python manage.py runserver
 
     The Django Backend development server will typically run on http://127.0.0.1:8000/.
@@ -92,19 +92,19 @@ Other Requirements are in the file [requirements.txt](requirements.txt)
 
 1. *Navigate to the Frontend Directory*
 
-   bash
+   bash:
    cd frontend
    
 
 2. *Install Frontend Dependencies*
 
-   bash
+   bash:
    npm install  # or yarn install
    
 
 3. *Start the Development Server*
 
-   bash
+   bash:
    npm start  # or yarn start
    
 
@@ -129,7 +129,7 @@ For Security reasons you can add .env file to protect your sensitive data from s
 
 1. *Build the Frontend for Production*
 
-   bash
+   bash:
    npm run build  # or yarn build
    
 
@@ -139,7 +139,7 @@ For Security reasons you can add .env file to protect your sensitive data from s
 
    - Update ekrisshakbackend/settings.py to serve static files:
 
-     python
+     python:
      STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ekrisshakfrontend/build')]
      
 
@@ -149,13 +149,13 @@ For Security reasons you can add .env file to protect your sensitive data from s
 
    - *Install Gunicorn*:
 
-     bash
+     bash:
      pip install gunicorn
      
 
    - *Run Gunicorn*:
 
-     bash
+     bash:
      gunicorn --bind 0.0.0.0:8000 my_project.wsgi
      
 
@@ -163,7 +163,7 @@ For Security reasons you can add .env file to protect your sensitive data from s
 
      Configure Nginx to serve the Django application and the React build directory. Example Nginx configuration:
 
-     nginx
+     nginx:
      server {
          listen 80;
          server_name your_domain_or_ip;
