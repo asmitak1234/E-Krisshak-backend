@@ -1,14 +1,15 @@
 # E-Krisshak-backend
 <!-- explaining setup,functionalities, and deployment steps. -->
+<!-- ## for heading, # for main heading,following for links and lists ,[CONTRIBUTING.md](CONTRIBUTING.md) file for locating to file.-->
 
 
 ## Description
 
 Hello Everyone, I am ASMITA KUMARI ,a young learner and i am here with my project called "E-Krisshak" , A farmer availability management system that helps to find a farmer for your field with their proper and detailed Personal, Professional and Contact information that helps you to choose them according to your requirements. I am making this project with the intension of helping the land-owners that can't find farmer for their field and many farmers that are seeking for work ,especially in INDIA.
+
 This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application using Django for the backend, React for the frontend, and MySQL as the database. This README provides instructions on setting up, using, and deploying the backend of this project.
 
 ## Table of Contents
-<!-- ## for heading, # for main heading,following for links and lists -->
 
 - [Requirements](#requirements)
 - [Setup](#setup)
@@ -51,7 +52,7 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
 4. *Configure the Database*
 
-   - Create a MySQL database and user. Update the database settings in my_project/settings.py:
+   - Create a MySQL database and user. Update the database settings in [ekrisshakbackend/settings.py](settings.py):
 
      python
      DATABASES = {
@@ -85,7 +86,7 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
     The Django Backend development server will typically run on http://127.0.0.1:8000/.
    
-Other Requirements are in the file requirements.txt
+Other Requirements are in the file [requirements.txt](requirements.txt)
 
 ### Frontend Setup
 
@@ -114,7 +115,7 @@ Other Requirements are in the file requirements.txt
 - *Frontend-Backend*: Frontend and Backend is connected by Axios library.
 - *Backend-Database*: Backend and Database is connected by updating Database information in settings.py after creating database.
  
-For Security reasons you can add .env file to protect your sensitive data from settings.py and including it in .gitignore file.
+For Security reasons you can add .env file to protect your sensitive data from settings.py and including it in [.gitignore](.gitignore) file.
 
 ## Functionalities
 
@@ -184,10 +185,10 @@ For Security reasons you can add .env file to protect your sensitive data from s
 
 4. *Set Up a Database Production Configuration*
 
-   Update your DATABASES settings in `my_project
+   Update your DATABASES settings in `ekrisshakbackend
 
 5. *Secure Your Application*
 
-   - Set DEBUG = False in my_project/settings.py.
+   - Set DEBUG = False in ekrisshakbackend/settings.py.
    - Set up proper security settings, including ALLOWED_HOSTS, SECRET_KEY, and HTTPS.
 
