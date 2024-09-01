@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 from decouple import config 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,20 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
 
 
 # Application definition
@@ -126,7 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ekrisshakfrontend/build')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ekrisshakfrontend/build')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -138,5 +153,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     "http://127.0.0.1:8000",
 # ]
 
-CORS_ORIGIN_ALLOW_ALL=True
-CORS_ALLOW_ALL_HEADERS=True
+CORS_ALLOWED_ORIGINS=[
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://e-krisshak-frontend.vercel.app/'
+]
+CORS_ALLOWS_CREDENTIALS = True
