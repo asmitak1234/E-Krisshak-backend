@@ -7,7 +7,7 @@
 
 ## Description
 
-Hello Everyone, I am ASMITA KUMARI , a young learner and i am here with backend part of my project called "E-Krisshak" , A farmer availability management system that helps to find a farmer for your field with their proper and detailed Personal, Professional and Contact information that helps you to choose them according to your requirements. I am making this project with the intension of helping the land-owners that can't find farmer for their field and many farmers that are seeking for work ,especially in INDIA.
+Hello Everyone, I am ASMITA KUMARI , a young learner and i am here with frontend part of my project called "E-Krisshak" , A farmer availability management system that helps to select and find a farmer for your field with their proper and detailed Personal, Professional and Contact information that helps you to store and choose them according to your requirements.This is a Secure and Efficient WebApp and I am making this project with the intension of helping the land-owners that can't find farmer for their field and many farmers that are seeking for work ,especially in INDIA.
 
 This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application using Django for the backend, React for the frontend, and MySQL as the database. This README provides instructions on setting up, using, and deploying the backend of this project.
 
@@ -27,6 +27,7 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 - Node.js 14 or higher
 - npm (or yarn) for managing JavaScript packages
 - MySQL server
+- Other Requirements are in the file [requirements.txt](requirements.txt)
 
 ## Setup
 
@@ -95,7 +96,7 @@ Other Requirements are in the file [requirements.txt](requirements.txt)
 1. *Navigate to the Frontend Directory*
 
    bash:
-   cd frontend
+   cd ekrisshakfrontend
    
 
 2. *Install Frontend Dependencies*
@@ -115,13 +116,13 @@ Other Requirements are in the file [requirements.txt](requirements.txt)
 ## Connection 
 
 - *Frontend-Backend*: Frontend and Backend is connected by Axios library.
-- *Backend-Database*: Backend and Database is connected by updating Database information in settings.py after creating database.
+- *Backend-Database*: Backend and Database is connected through mysqlclient by updating Database information in settings.py after creating database.
  
 For Security reasons you can add .env file to protect your sensitive data from settings.py and including it in [.gitignore](.gitignore) file.
 
 ## Functionalities
 
-- *User Authentication*: Users can register and log in to their profiles.
+- *User Authentication*: Users can register and log in to their profiles with alerts.
 - *Responsive Design*: The frontend is designed to be responsive and dynamic that works on various devices.
 - *Navigation*: Users can navigate to different web pages(Home , List , Manage) through Side Navigation Bar.
 - *Form Handling*: User input and form submissions are handled with proper validation mechanisms.
@@ -130,68 +131,122 @@ For Security reasons you can add .env file to protect your sensitive data from s
 
 ## Deployment
 
-1. *Build the Frontend for Production*
+   #### Overview
+      This section describes the steps to deploy the backend of this project, which is built with Django, uses MySQL as its database, and utilizes python-decouple for managing environment variables, to Heroku. The frontend built with React is not covered here but will need to be deployed separately.
 
-   bash:
-   npm run build  # or yarn build
+   #### Prerequisites
+
+   Before deploying the backend, ensure you have the following:
    
+   - A Heroku account (sign up at Heroku).
+   - The Heroku CLI installed. You can install it by following Heroku CLI installation instructions.
+   - MySQL database and user credentials.
+   - Your Django project should be ready for deployment with a requirements.txt file and necessary configurations.
 
-   This will create a build directory with static files for production.
+   #### Steps to Deploy
 
-2. *Serve Static Files in Django*
+   1. *Prepare Your Django Project*
 
-   - Update ekrisshakbackend/settings.py to serve static files:
+       - Install Required Packages
 
-     python:
-     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ekrisshakfrontend/build')]
-     
+         Ensure you have gunicorn, dj-database-url, and python-decouple in your requirements.txt for running the app on Heroku.
+         pip install gunicorn dj-database-url python-decouple
 
-   - Ensure django.contrib.staticfiles is in your INSTALLED_APPS.
+         Then, add these to your requirements.txt:
+         pip freeze > requirements.txt
 
-3. *Configure Gunicorn and Nginx*
+         Configure settings.py
+         
+         from decouple import config, Csv
+         import dj_database_url
 
-   - *Install Gunicorn*:
+       - Load environment variables
 
-     bash:
-     pip install gunicorn
-     
+         SECRET_KEY = config('DJANGO_SECRET_KEY')
+         DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
-   - *Run Gunicorn*:
+       - Database configuration
 
-     bash:
-     gunicorn --bind 0.0.0.0:8000 my_project.wsgi
-     
-
-   - *Set Up Nginx*:
-
-     Configure Nginx to serve the Django application and the React build directory. Example Nginx configuration:
-
-     nginx:
-     server {
-         listen 80;
-         server_name your_domain_or_ip;
-
-         location / {
-             root /path/to/your/repo/frontend/build;
-             try_files $uri /index.html;
+         DATABASES = {
+            'default': dj_database_url.parse(config('DATABASE_URL'))
          }
 
-         location /api/ {
-             proxy_pass http://127.0.0.1:8000;
-             proxy_set_header Host $host;
-             proxy_set_header X-Real-IP $remote_addr;
-             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-             proxy_set_header X-Forwarded-Proto $scheme;
-         }
-     }
-     
+       - Allowed hosts
 
-4. *Set Up a Database Production Configuration*
+         ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=Csv())
+         Create a Procfile
+         Create a Procfile in the root directory of your project to tell Heroku how to run your application:
 
-   Update your DATABASES settings in `ekrisshakbackend
+         web: gunicorn myproject.wsgi
 
-5. *Secure Your Application*
+         Add Static File Configuration
+         Install whitenoise to serve static files:
 
-   - Set DEBUG = False in ekrisshakbackend/settings.py.
-   - Set up proper security settings, including ALLOWED_HOSTS, SECRET_KEY, and HTTPS.
+         pip install whitenoise
+         Update your settings.py:
+         MIDDLEWARE = [
+            'whitenoise.middleware.WhiteNoiseMiddleware',
+            # other middleware...
+         ]
+
+         STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+         Add whitenoise to requirements.txt:
+         pip freeze > requirements.txt
+
+   2. *Deploy to Heroku*
+
+      - Login to Heroku
+
+         Open your terminal and log in to your Heroku account:
+         heroku login
+
+         Create a Heroku App
+         Create a new app on Heroku:
+         heroku create your-app-name
+
+      - Add MySQL Add-on
+
+         Add the ClearDB MySQL add-on (or another MySQL add-on of your choice):
+         heroku addons:create cleardb:ignite
+
+         This will provision a MySQL database and provide a DATABASE_URL environment variable.
+
+      - Set Environment Variables
+
+         Configure the environment variables that python-decouple will use. You can dothis through the Heroku CLI or the Heroku Dashboard. Here's how to set environment variables using the Heroku CLI:
+         
+         heroku config:set DJANGO_SECRET_KEY='your-secret-key'
+         heroku config:set DJANGO_DEBUG=False
+         heroku config:set ALLOWED_HOSTS='yourdomain.com'
+         heroku config:set DATABASE_URL='your-cleardb-database-url'
+
+      - Push Code to Heroku
+         Initialize a Git repository if you haven’t already:
+
+         git init
+         git add .
+         git commit -m "Initial commit"
+
+         Push to Heroku:
+         git push heroku master
+
+         Run Migrations:
+         heroku run python manage.py migrate
+
+         Create a Superuser (Optional):
+         heroku run python manage.py createsuperuser
+
+         Collect static files for production use:
+         heroku run python manage.py collectstatic --noinput
+
+   3. *Verify Deployment*
+
+         Once the deployment is complete, open your app in the browser:
+
+         heroku open
+         Check that your app is running correctly and verify that all features work as expected.
+
+
+
 
