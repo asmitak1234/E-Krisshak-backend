@@ -102,7 +102,7 @@ DATABASES = {
         'USER': config("DB_USER"),
         'PASSWORD': config("DB_PASSWORD"),
         'HOST': config("DB_HOST"),
-        'PORT': '3306',
+        'PORT': config("DB_PORT"),
     }
 }
 
@@ -142,6 +142,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ekrisshakfrontend/build')]
+
+STATIC_ROOT=os.path.join(BASE_DIR,'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
