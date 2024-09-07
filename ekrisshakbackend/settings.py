@@ -16,7 +16,6 @@ from pathlib import Path
 import os
 from datetime import timedelta
 from decouple import config 
-from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,6 +62,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -97,16 +97,15 @@ WSGI_APPLICATION = 'ekrisshakbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-url=urlparse(config('DATABASE_URL'))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': url.path[1:],
-        'USER': url.username,
-        'PASSWORD': url.password,
-        'HOST': url.hostname,
-        'PORT': url.port,
+        'NAME':config('DB_NAME'),
+        'USER':config('DB_USER') ,
+        'PASSWORD':config('DB_PASSWORD') ,
+        'HOST':config('DB_HOST') ,
+        'PORT': config('DB_PORT',default='3306'),
     }
 }
 
@@ -144,10 +143,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ekrisshakfrontend/build')]
 
 STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+
+STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

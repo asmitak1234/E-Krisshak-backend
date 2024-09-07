@@ -1,1 +1,0 @@
-web: gunicorn ekrisshakbackend.wsgi --log-file-
