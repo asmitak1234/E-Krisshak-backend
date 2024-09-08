@@ -131,122 +131,98 @@ For Security reasons you can add .env file to protect your sensitive data from s
 
 ## Deployment
 
-   #### Overview
-      This section describes the steps to deploy the backend of this project, which is built with Django, uses MySQL as its database, and utilizes python-decouple for managing environment variables, to Heroku. The frontend built with React is not covered here but will need to be deployed separately.
+   ### Overview
+      This project involves deploying a Django backend to Vercel, while using AlwaysData for the database. Follow these steps to deploy the application successfully.
 
-   #### Prerequisites
+   ### Prerequisites
 
    Before deploying the backend, ensure you have the following:
    
-   - A Heroku account (sign up at Heroku).
-   - The Heroku CLI installed. You can install it by following Heroku CLI installation instructions.
-   - MySQL database and user credentials.
-   - Your Django project should be ready for deployment with a requirements.txt file and necessary configurations.
+   - Django Project: Ensure your Django project is set up and working locally.
+   - Vercel Account: Sign up for a Vercel account if you don't have one.
+   - AlwaysData Account: Sign up for an AlwaysData account if you don't have one.
+   - Git: Ensure Git is installed and configured on your local machine.
 
-   #### Steps to Deploy
+   ### Steps to Deploy
 
-   1. *Prepare Your Django Project*
+   1. *Setup AlwaysData for the Database*
 
-       - Install Required Packages
+      Create a Database:
 
-         Ensure you have gunicorn, dj-database-url, and python-decouple in your requirements.txt for running the app on Heroku.
-         pip install gunicorn dj-database-url python-decouple
+      Log in to your AlwaysData account.
+      Go to the “Databases” section and create a new database.
+      Note the database name, user, password, and host information.
 
-         Then, add these to your requirements.txt:
-         pip freeze > requirements.txt
+      Configure Django Settings:
 
-         Configure settings.py
-         
-         from decouple import config, Csv
-         import dj_database_url
+      In your Django project, update the DATABASES settings in settings.py to use the AlwaysData database credentials. Example:
 
-       - Load environment variables
-
-         SECRET_KEY = config('DJANGO_SECRET_KEY')
-         DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
-
-       - Database configuration
-
-         DATABASES = {
-            'default': dj_database_url.parse(config('DATABASE_URL'))
+      DATABASES = {
+         'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'your_db_name',
+            'USER': 'your_db_user',
+            'PASSWORD': 'your_db_password',
+            'HOST': 'your_db_host',
+            'PORT': '3306',
          }
+      }
 
-       - Allowed hosts
+      Install gunicorn and whitenoise and include whitenoise's middleware.
+      
+      Apply Migrations:
 
-         ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=Csv())
-         Create a Procfile
-         Create a Procfile in the root directory of your project to tell Heroku how to run your application:
+      Run Django migrations to set up the database schema:
+      python manage.py migrate
 
-         web: gunicorn myproject.wsgi
+   2. *Deploy Django Backend to Vercel*
 
-         Add Static File Configuration
-         Install whitenoise to serve static files:
+      Prepare the Django Project:
 
-         pip install whitenoise
-         Update your settings.py:
-         MIDDLEWARE = [
-            'whitenoise.middleware.WhiteNoiseMiddleware',
-            # other middleware...
+      Make sure you have a vercel.json file in the root of your project to configure the Vercel deployment. Example:
+
+      {
+         "builds":[
+            {
+                  "src":"your_project_name/wsgi.py",
+                  "use":"@vercel/python",
+                  "config":{"maxLambdaSize":"15mb","runtime":"python3.9"}
+            }
+         ],
+         "routes":[
+            {
+                  "src":"/(.*)",
+                  "dest":"your_project_name/wsgi.py"
+            }
          ]
+      }
 
-         STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+      Ensure you have gunicorn in your requirements.txt or Pipfile:
+      
+      Login to Vercel:
 
-         Add whitenoise to requirements.txt:
-         pip freeze > requirements.txt
+      Login to vercel and click on new project,
+      Connect it to github and,
+      After pushing all the changes to github ,Select the repository to be deployed
+      
 
-   2. *Deploy to Heroku*
+      Configure Environment Variables:
 
-      - Login to Heroku
-
-         Open your terminal and log in to your Heroku account:
-         heroku login
-
-         Create a Heroku App
-         Create a new app on Heroku:
-         heroku create your-app-name
-
-      - Add MySQL Add-on
-
-         Add the ClearDB MySQL add-on (or another MySQL add-on of your choice):
-         heroku addons:create cleardb:ignite
-
-         This will provision a MySQL database and provide a DATABASE_URL environment variable.
-
-      - Set Environment Variables
-
-         Configure the environment variables that python-decouple will use. You can dothis through the Heroku CLI or the Heroku Dashboard. Here's how to set environment variables using the Heroku CLI:
-         
-         heroku config:set DJANGO_SECRET_KEY='your-secret-key'
-         heroku config:set DJANGO_DEBUG=False
-         heroku config:set ALLOWED_HOSTS='yourdomain.com'
-         heroku config:set DATABASE_URL='your-cleardb-database-url'
-
-      - Push Code to Heroku
-         Initialize a Git repository if you haven’t already:
-
-         git init
-         git add .
-         git commit -m "Initial commit"
-
-         Push to Heroku:
-         git push heroku master
-
-         Run Migrations:
-         heroku run python manage.py migrate
-
-         Create a Superuser (Optional):
-         heroku run python manage.py createsuperuser
-
-         Collect static files for production use:
-         heroku run python manage.py collectstatic --noinput
-
-   3. *Verify Deployment*
-
-         Once the deployment is complete, open your app in the browser:
-
-         heroku open
-         Check that your app is running correctly and verify that all features work as expected.
+      Set environment variables for your Django project in Vercel for deployment and click 'Deploy' button.
 
 
+   3. *Post-Deployment*
 
+      Collect Static Files:
+
+      Ensure static files are collected for your Django app:
+
+      python manage.py collectstatic --noinput
+      
+      Check the Deployment:
+
+      Visit the Vercel deployment URL to ensure everything is working correctly.
+      Monitor Logs:
+
+      Use Vercel’s dashboard to monitor logs and troubleshoot any issues that arise.
 
