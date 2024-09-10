@@ -35,21 +35,18 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
 1. *Clone the Repository*
 
-   bash:
    git clone https://github.com/asmitak1234/E-Krisshak-backend.git
    cd E-Krisshak-backend
    
 
 2. *Create and Activate a Virtual Environment*
 
-   bash:
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    
 
 3. *Install Backend Dependencies*
 
-   bash:
    pip install -r requirements.txt
    
 
@@ -57,7 +54,6 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
    - Create a MySQL database and user. Update the database settings in [ekrisshakbackend/settings.py](ekrisshakbackend/settings.py):
 
-     python:
      DATABASES = {
          'default': {
              'ENGINE': 'django.db.backends.mysql',
@@ -72,19 +68,16 @@ This project is a full-stack CRUD(Create, Read, Update, Delete) Web Application 
 
 5. *Apply Migrations*
 
-   bash:
    python manage.py migrate
    
 
 6. *Create a Superuser*
 
-   bash:
    python manage.py createsuperuser
    
 
 7. *Run the Development Server*
 
-   bash:
    python manage.py runserver
 
     The Django Backend development server will typically run on http://127.0.0.1:8000/.
@@ -95,19 +88,16 @@ Other Requirements are in the file [requirements.txt](requirements.txt)
 
 1. *Navigate to the Frontend Directory*
 
-   bash:
    cd ekrisshakfrontend
    
 
 2. *Install Frontend Dependencies*
 
-   bash:
    npm install  # or yarn install
    
 
 3. *Start the Development Server*
 
-   bash:
    npm start  # or yarn start
    
 
